@@ -31,9 +31,7 @@
 <meta property="og:url" content="http://localhost:1313/projects/666-malevolence-lane/">
   <meta property="og:site_name" content="Camilla Leslie - Software Engineer">
   <meta property="og:title" content="666 Malevolence Lane">
-  <meta property="og:description" content="My Involvement Writeup about the game and my involvement.
-Code Examples Here I would post snippets of python code about the build automation work I’ve done, or examples of blueprints I made while working on systems of the game.
-#Build function that runs once every 24 hours via APScheduler def BuildGame(self): #Changes directory to UE5 build tools os.chdir(f&#34;{self.epic_games_folder_path}/Engine/Build/BatchFiles/&#34;) #Builds the project&#39;s code into a target file exit_code = subprocess.call(f&#34;Build.bat CapstonePrototype Win64 Development \&#34;{self.game_uproject_path}\&#34;&#34;) if not exit_code == 0: self.webhook.send(f&#34;# Build Information\n\nFailed to build target file from source code! {alert_role_id}&#34;, thread=self.thread_id) return False #Starts build and package of project at game_uproject_path exit_code = subprocess.call(f&#34;RunUAT BuildCookRun -project=\&#34;{self.game_uproject_path}\&#34; -platform=Win64 -clientconfig=Development -serverconfig=Development &#34; &#43; f&#34;-skipcook -maps=AllMaps -compile -stage -pak -archivedirectory={self.build_folder_path} -archive&#34;, shell=True) #If exit_code anything other than 0 build failed, pings Camilla in discord if not exit_code == 0: self.webhook.send(f&#39;# Build Information\n\nBuild failed! {alert_role_id}&#39;, thread=self.thread_id) return False else: data = BuildUtils.GetBuildJSONData() data[&#34;version&#34;] &#43;= 1 BuildUtils.StoreBuildJSONData(data) rel, mile, ver = data[&#34;release&#34;], data[&#34;milestone&#34;], data[&#34;version&#34;] self.webhook.send(f&#39;# Build Information\n\nBuild successful! Current version: v{rel}.{mile}.{ver} {alert_role_id}&#39;, thread=self.thread_id) return True">
+  <meta property="og:description" content="An action-packed minigame focused local multiplayer experience for you and your friends! Click ‘Read more’ to learn about my involvement!">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="projects">
@@ -41,9 +39,7 @@ Code Examples Here I would post snippets of python code about the build automati
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="666 Malevolence Lane">
-  <meta name="twitter:description" content="My Involvement Writeup about the game and my involvement.
-Code Examples Here I would post snippets of python code about the build automation work I’ve done, or examples of blueprints I made while working on systems of the game.
-#Build function that runs once every 24 hours via APScheduler def BuildGame(self): #Changes directory to UE5 build tools os.chdir(f&#34;{self.epic_games_folder_path}/Engine/Build/BatchFiles/&#34;) #Builds the project&#39;s code into a target file exit_code = subprocess.call(f&#34;Build.bat CapstonePrototype Win64 Development \&#34;{self.game_uproject_path}\&#34;&#34;) if not exit_code == 0: self.webhook.send(f&#34;# Build Information\n\nFailed to build target file from source code! {alert_role_id}&#34;, thread=self.thread_id) return False #Starts build and package of project at game_uproject_path exit_code = subprocess.call(f&#34;RunUAT BuildCookRun -project=\&#34;{self.game_uproject_path}\&#34; -platform=Win64 -clientconfig=Development -serverconfig=Development &#34; &#43; f&#34;-skipcook -maps=AllMaps -compile -stage -pak -archivedirectory={self.build_folder_path} -archive&#34;, shell=True) #If exit_code anything other than 0 build failed, pings Camilla in discord if not exit_code == 0: self.webhook.send(f&#39;# Build Information\n\nBuild failed! {alert_role_id}&#39;, thread=self.thread_id) return False else: data = BuildUtils.GetBuildJSONData() data[&#34;version&#34;] &#43;= 1 BuildUtils.StoreBuildJSONData(data) rel, mile, ver = data[&#34;release&#34;], data[&#34;milestone&#34;], data[&#34;version&#34;] self.webhook.send(f&#39;# Build Information\n\nBuild successful! Current version: v{rel}.{mile}.{ver} {alert_role_id}&#39;, thread=self.thread_id) return True">
+  <meta name="twitter:description" content="An action-packed minigame focused local multiplayer experience for you and your friends! Click ‘Read more’ to learn about my involvement!">
 
 
 
@@ -323,22 +319,20 @@ Code Examples Here I would post snippets of python code about the build automati
             </div>
           </div>
           
-          <div class="featured-image">
-            <img class="img-fluid mx-auto d-block" src="/images/mallanebanner.png" alt="666 Malevolence Lane">
-          </div>
-          
           <article class="page-content  p-2">
-          <h2 id="my-involvement">My Involvement</h2>
-<p>Writeup about the game and my involvement.</p>
-<h2 id="code-examples">Code Examples</h2>
-<p>Here I would post snippets of python code about the build automation work I&rsquo;ve done, or examples of blueprints I made while working on systems of the game.</p>
+          <p><img src="/images/mallanebanner.png" alt="Image"></p>
+<h2 id="my-involvement">My Involvement</h2>
+<p>As Technical Director on the project, I was involved in most engineering aspects of the game, such as architecture of the core systems, heading development on the Player AI systems, and handling build automation. I also contributed two of the playable minigames in 666 Malevolence Lane, which are outlined in more detail below. Beyond the systems I made, I worked in most of the codebase doing polish and general bugfixing for the last few months of development.</p>
+<h3 id="--build-automation">- Build Automation</h3>
+<p>One of my prouder contributions to the project was a system for automatically updating a machines&rsquo; code and art assets through P4 and building the project nightly. I hooked this system up to a Discord bot and used a combination of the bot and webhooks to display information regarding build automated test statuses, which helped us identify quickly what changelists last broke the ability to package our project.</p>
+<p>Here&rsquo;s a small example of how I was fetching these files and building the game using Python and APScheduler:</p>
 <pre tabindex="0"><code>#Build function that runs once every 24 hours via APScheduler
 def BuildGame(self):
         #Changes directory to UE5 build tools
         os.chdir(f&#34;{self.epic_games_folder_path}/Engine/Build/BatchFiles/&#34;)
 
         #Builds the project&#39;s code into a target file
-        exit_code = subprocess.call(f&#34;Build.bat CapstonePrototype Win64 Development \&#34;{self.game_uproject_path}\&#34;&#34;)
+        exit_code = subprocess.call(f&#34;Build.bat {self.project_name} Win64 Development \&#34;{self.game_uproject_path}\&#34;&#34;)
 
         if not exit_code == 0:
             self.webhook.send(f&#34;# Build Information\n\nFailed to build target file from source code! {alert_role_id}&#34;, thread=self.thread_id)
@@ -348,7 +342,7 @@ def BuildGame(self):
         exit_code = subprocess.call(f&#34;RunUAT BuildCookRun -project=\&#34;{self.game_uproject_path}\&#34; -platform=Win64 -clientconfig=Development -serverconfig=Development &#34; +
                                     f&#34;-skipcook -maps=AllMaps -compile -stage -pak -archivedirectory={self.build_folder_path} -archive&#34;, shell=True)
         
-        #If exit_code anything other than 0 build failed, pings Camilla in discord
+        #If exit_code is anything other than 0 then build has failed, pings Camilla in discord
         if not exit_code == 0:
             self.webhook.send(f&#39;# Build Information\n\nBuild failed! {alert_role_id}&#39;, thread=self.thread_id)
             return False
@@ -359,7 +353,15 @@ def BuildGame(self):
             rel, mile, ver = data[&#34;release&#34;], data[&#34;milestone&#34;], data[&#34;version&#34;]
             self.webhook.send(f&#39;# Build Information\n\nBuild successful! Current version: v{rel}.{mile}.{ver} {alert_role_id}&#39;, thread=self.thread_id)
             return True
-</code></pre>
+</code></pre><h3 id="--player-ai">- Player AI</h3>
+<p>This was a feature that posed a few technical challenges for making the game, the fact that each minigame in 666 Malevolence Lane needs some sort of unique implementation complicated things, but a solid foundation of reusable tasks and helper components to give the AI more information and make them smarter players goes a long way in making the game more enjoyable to play when you don&rsquo;t have enough people to fill out all the slots.</p>
+<p><img src="/images/mallanebt.png" alt="Image"></p>
+<h3 id="--minigames">- Minigames</h3>
+<p>While working on the game, I contributed 2 out of the 10 playable minigames available in 666 Malevolence Lane. The first one was part of our initial playtesting prototype, known in-game as &lsquo;Musical Scares&rsquo;, which is a chance based minigame where players pick from hiding spots that are slowly made inaccessible as the enemy eliminates more players. Since we wanted a unified Interact button that served multiple purposes across different minigames, this seemed like a good minigame to start our prototype with and to flesh out that system.</p>
+<p><img src="/images/mallanems.gif" alt="Image"></p>
+<p>I also developed a minigame focused on an infinite procedural hallway that plays on older horror tropes, called &lsquo;Hall&rsquo;O&rsquo;Way Chase&rsquo;. The procedural generation for the hallway uses a number of tileable models made by our artists before adding additional details such as lights, windows, pillars, etc. Finally obstacles and clutter are placed through the hallway in a periodic and fair manner.</p>
+<p><img src="/images/mallanehowc.gif" alt="Image"></p>
+
           </article>
         </div>
       </div>
@@ -373,8 +375,13 @@ def BuildGame(self):
               <div class="toc-content">
                 <nav id="TableOfContents">
   <ul>
-    <li><a href="#my-involvement">My Involvement</a></li>
-    <li><a href="#code-examples">Code Examples</a></li>
+    <li><a href="#my-involvement">My Involvement</a>
+      <ul>
+        <li><a href="#--build-automation">- Build Automation</a></li>
+        <li><a href="#--player-ai">- Player AI</a></li>
+        <li><a href="#--minigames">- Minigames</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
               </div>
