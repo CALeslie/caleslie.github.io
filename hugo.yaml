@@ -92,6 +92,9 @@ params:
       - title: "Pizza Wizard: 144X - 2025"
         content: Arcade style pizza delivery game, utilize spells and upgrades to try and achieve a highscore. Made all models and art assets except title logo by hand.
         image: images/pizzawizard.png
+        imagelink: 
+          enable: true
+          link: /projects/pizza-wizard-144x/
         badges:
           - "Godot"
           - "GDScript"
@@ -119,6 +122,9 @@ params:
       - title: "Bone Rolla - 2022"
         content: Roguelike dice game, curate and refine your dice collection as you delve as deep into the dungeon as you can!
         image: images/bonerolla.png
+        imagelink: 
+          enable: true
+          link: /projects/bone-rolla/
         badges:
           - "Unity"
           - "C#"
@@ -201,7 +207,7 @@ params:
     title: About
     image: images/Uccello2.svg
     content: |+
-      I'm currently a senior at Shawnee State University in Portsmouth, OH, studying Digital Simulation! Passionate about making memorable games and interactive digital experiences. Let's make something unique together!
+      Game and Software developer based in Southern Ohio. Lifelong computer gamer and tinkerer with a variety of technology related hobbies. Passionate about making memorable games and interactive digital experiences. Let's make something unique together!
 
     skills:
       enable: true
@@ -237,8 +243,8 @@ params:
           name: "Shawnee State University"
           url: "https://shawnee.edu"
         date: "2022 - 2026"
-        GPA: "3.60 out of 4.0"
-        content: "Well rounded mix of theory and application of multiple areas of Computer Science including data structures, operating systems, 3D graphics programming, algorithms, and more. Developed several game projects while studying, and currently spending my senior year as Technical Director for the collaborative capstone project '666 Malevolence Lane'."
+        GPA: "3.62 out of 4.0"
+        content: "Well rounded mix of theory and application of multiple areas of Computer Science including data structures, operating systems, 3D graphics programming, algorithms, and more. Developed several game projects while studying, and spent my senior year as Technical Director for the collaborative capstone project '666 Malevolence Lane'."
 
   contact:
     enable: true

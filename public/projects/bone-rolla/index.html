@@ -28,18 +28,18 @@
 
 
 
-<meta property="og:url" content="http://localhost:1313/projects/666-malevolence-lane/">
+<meta property="og:url" content="http://localhost:1313/projects/bone-rolla/">
   <meta property="og:site_name" content="Camilla Leslie - Software Engineer">
-  <meta property="og:title" content="666 Malevolence Lane">
-  <meta property="og:description" content="An action-packed minigame focused local multiplayer experience for you and your friends! Click ‘Read more’ to learn about my involvement!">
+  <meta property="og:title" content="Bone Rolla">
+  <meta property="og:description" content="Roguelike dice game with deckbuilding and RPG elements. Click ‘Read more’ to learn about the development of the game!">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="projects">
 
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="666 Malevolence Lane">
-  <meta name="twitter:description" content="An action-packed minigame focused local multiplayer experience for you and your friends! Click ‘Read more’ to learn about my involvement!">
+  <meta name="twitter:title" content="Bone Rolla">
+  <meta name="twitter:description" content="Roguelike dice game with deckbuilding and RPG elements. Click ‘Read more’ to learn about the development of the game!">
 
 
 
@@ -120,7 +120,7 @@
   
 
   <title>
-666 Malevolence Lane | Camilla Leslie - Software Engineer
+Bone Rolla | Camilla Leslie - Software Engineer
 
   </title>
 </head>
@@ -319,50 +319,27 @@
           </div>
           
           <article class="page-content  p-2">
-          <img src="/images/mallanebanner.png" width="100%" style="max-width:100%px;border-radius:16px;" />
+          <img src="/images/bonerollabanner.png" width="100%" style="max-width:100%px;border-radius:16px;" />
 <br><br>
-<h2 id="my-involvement">My Involvement</h2>
-<p>As Technical Director on the project, I was involved in most engineering aspects of the game, such as architecture of the core systems, heading development on the Player AI systems, and handling build automation. I also contributed two of the playable minigames in 666 Malevolence Lane, which are outlined in more detail below. Beyond the systems I made, I worked in most of the codebase doing polish and general bugfixing for the last few months of development.</p>
-<h3 id="build-automation">Build Automation</h3>
-<p>One of my prouder contributions to the project was a system for automatically updating a machines&rsquo; code and art assets through P4 and building the project nightly. I hooked this system up to a Discord bot and used a combination of the bot and webhooks to display information regarding build automated test statuses, which helped us identify quickly what changelists last broke the ability to package our project.</p>
-<p>Here&rsquo;s a small example of how I was fetching these files and building the game using Python and APScheduler:</p>
-<pre tabindex="0"><code>#Build function that runs once every 24 hours via APScheduler
-def BuildGame(self):
-        #Changes directory to UE5 build tools
-        os.chdir(f&#34;{self.epic_games_folder_path}/Engine/Build/BatchFiles/&#34;)
-
-        #Builds the project&#39;s code into a target file
-        exit_code = subprocess.call(f&#34;Build.bat {self.project_name} Win64 Development \&#34;{self.game_uproject_path}\&#34;&#34;)
-
-        if not exit_code == 0:
-            self.webhook.send(f&#34;# Build Information\n\nFailed to build target file from source code! {alert_role_id}&#34;, thread=self.thread_id)
-            return False
-
-        #Starts build and package of project at game_uproject_path
-        exit_code = subprocess.call(f&#34;RunUAT BuildCookRun -project=\&#34;{self.game_uproject_path}\&#34; -platform=Win64 -clientconfig=Development -serverconfig=Development &#34; +
-                                    f&#34;-skipcook -maps=AllMaps -compile -stage -pak -archivedirectory={self.build_folder_path} -archive&#34;, shell=True)
-        
-        #If exit_code is anything other than 0 then build has failed, pings Camilla in discord
-        if not exit_code == 0:
-            self.webhook.send(f&#39;# Build Information\n\nBuild failed! {alert_role_id}&#39;, thread=self.thread_id)
-            return False
-        else:
-            data = BuildUtils.GetBuildJSONData()
-            data[&#34;version&#34;] += 1
-            BuildUtils.StoreBuildJSONData(data)
-            rel, mile, ver = data[&#34;release&#34;], data[&#34;milestone&#34;], data[&#34;version&#34;]
-            self.webhook.send(f&#39;# Build Information\n\nBuild successful! Current version: v{rel}.{mile}.{ver} {alert_role_id}&#39;, thread=self.thread_id)
-            return True
-</code></pre><h3 id="player-ai">Player AI</h3>
-<p>This was a feature that posed a few technical challenges for making the game, the fact that each minigame in 666 Malevolence Lane needs some sort of unique implementation complicated things, but a solid foundation of reusable tasks and helper components to give the AI more information and make them smarter players goes a long way in making the game more enjoyable to play when you don&rsquo;t have enough people to fill out all the slots.</p>
-<img src="/images/mallanebt.png" width="100%" style="max-width:600px;border-radius:16px;" />
+<h2 id="overview">Overview</h2>
+<p>This game was made during the summer period leading up to my first semester of college, and features a number of roguelike and RPG elements blended together into an interesting dice-based deckbuilding experience. The idea of the game is that players can find modified versions of familiar dice commonly used in tabletop gaming such as a Lucky D8 that only contains the upper half of the die multiplied twice, in one of three different dice types. These are represented in the form of dice with weapon names for damage, dice with equipment names for armor, and dice with spell names for healing. This game also marked my first attempt at composing and producing music, which continued on as a personal hobby ever since I picked up the skills necessary for making the music in this game.</p>
+<img src="/images/bonerolla1.png" width="100%" style="max-width:600px;border-radius:16px;" />
 <br><br>
-<h3 id="minigames">Minigames</h3>
-<p>While working on the game, I contributed 2 out of the 10 playable minigames available in 666 Malevolence Lane. The first one was part of our initial playtesting prototype, known in-game as &lsquo;Musical Scares&rsquo;, which is a chance based minigame where players pick from hiding spots that are slowly made inaccessible as the enemy eliminates more players. Since we wanted a unified Interact button that served multiple purposes across different minigames, this seemed like a good minigame to start our prototype with and to flesh out that system.</p>
-<img src="/images/mallanems.gif" width="100%" style="max-width:600px;border-radius:16px;" />
+<h2 id="rpg-mechanics">RPG Mechanics</h2>
+<p>Beyond just having deckbuilding mechanics in obtaining and trading for new dice, I wanted a sense of continuous progression in the form of a leveling system for Bone Rolla. I also wanted a simple gold and shop mechanic that is common in RPG games as well, which facilitates a consistent way for players to ensure they can obtain and remove dice as they need during their run. Finally for my bullet point list of desired RPG mechanics, I wanted a breadth of enemies with differing kinds of strategies that are optimal for fighting them, the game currently has over 30 unique types of enemies to come across.</p>
+<h3 id="level-up-system">Level Up System</h3>
+<p>The level-up system in the game is based on a hidden experience point attribute that differs between types of enemies. Every 2nd level the player is offered a choice between three random feats out of a pool of 18 total feats to find and obtain, varying in bonuses and designed to have synergies between other feats and specific dice modifiers.</p>
+<img src="/images/bonerolla2.png" width="100%" style="max-width:600px;border-radius:16px;" />
 <br><br>
-<p>I also developed a minigame focused on an infinite procedural hallway that plays on older horror tropes, called &lsquo;Hall&rsquo;O&rsquo;Way Chase&rsquo;. The procedural generation for the hallway uses a number of tileable models made by our artists before adding additional details such as lights, windows, pillars, etc. Finally obstacles and clutter are placed through the hallway in a periodic and fair manner.</p>
-<img src="/images/mallanehowc.gif" width="100%" style="max-width:600px;border-radius:16px;" />
+<h2 id="roguelike-mechanics">Roguelike Mechanics</h2>
+<p>The primary goal of the project was focused on making a fun roguelike game, so the deckbuilding mechanic and surrounding mechanics that help facilitate it became the core of the game idea.</p>
+<h3 id="random-encounters">Random Encounters</h3>
+<p>To provide more variety between combat encounters, I went with a simple implementation for a randomly revealed story type of event system. This example shows the conclusion of an event room with unidentified mushrooms that may or may not be beneficial to the players&rsquo; survival. Before choices are made, each section would contain multiple choices to pick from that lead to a variety of outcomes, such as the one depicted here.</p>
+<img src="/images/bonerolla3.png" width="100%" style="max-width:600px;border-radius:16px;" />
+<br><br>
+<h3 id="path-choice">Path Choice</h3>
+<p>Between either random or combat encounters, the player gets a choice between a varying amount of options on where to go next. Sometimes there is a breadth of options for the player to make tactical decisions such as offloading gold for dice at the trader, or chancing a random event for a lucky item where they might just receive a cursed one instead. Then sometimes, it is fate that the critically low healthed player is backed into a corner of taking the only option before them of a combat encounter. This felt like it tied together well the rest of the encounter systems and the trading system to really complete the game loop.</p>
+<img src="/images/bonerolla4.png" width="100%" style="max-width:600px;border-radius:16px;" />
 <br><br>
 
           </article>
@@ -378,11 +355,16 @@ def BuildGame(self):
               <div class="toc-content">
                 <nav id="TableOfContents">
   <ul>
-    <li><a href="#my-involvement">My Involvement</a>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#rpg-mechanics">RPG Mechanics</a>
       <ul>
-        <li><a href="#build-automation">Build Automation</a></li>
-        <li><a href="#player-ai">Player AI</a></li>
-        <li><a href="#minigames">Minigames</a></li>
+        <li><a href="#level-up-system">Level Up System</a></li>
+      </ul>
+    </li>
+    <li><a href="#roguelike-mechanics">Roguelike Mechanics</a>
+      <ul>
+        <li><a href="#random-encounters">Random Encounters</a></li>
+        <li><a href="#path-choice">Path Choice</a></li>
       </ul>
     </li>
   </ul>

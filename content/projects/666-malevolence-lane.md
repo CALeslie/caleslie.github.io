@@ -4,8 +4,9 @@ title: "666 Malevolence Lane"
 draft: false
 github_link: "https://github.com/gurusabarish/hugo-profile"
 badges:
+  - Unreal - Blueprints
   - Technical Direction
-  - Build Automation
+  - Build Automation - Python
   - Gameplay Programming
 imagelink:
   enable: true
@@ -17,12 +18,13 @@ summary: "An action-packed minigame focused local multiplayer experience for you
 toc: 
 ---
 
-![Image](/images/mallanebanner.png)
+{{<image width=100% maxwidth=100% src="/images/mallanebanner.png">}}
+
 ## My Involvement
 
 As Technical Director on the project, I was involved in most engineering aspects of the game, such as architecture of the core systems, heading development on the Player AI systems, and handling build automation. I also contributed two of the playable minigames in 666 Malevolence Lane, which are outlined in more detail below. Beyond the systems I made, I worked in most of the codebase doing polish and general bugfixing for the last few months of development.
 
-### - Build Automation
+### Build Automation
 
 One of my prouder contributions to the project was a system for automatically updating a machines' code and art assets through P4 and building the project nightly. I hooked this system up to a Discord bot and used a combination of the bot and webhooks to display information regarding build automated test statuses, which helped us identify quickly what changelists last broke the ability to package our project.
 
@@ -58,18 +60,18 @@ def BuildGame(self):
             return True
 ```
 
-### - Player AI
+### Player AI
 
 This was a feature that posed a few technical challenges for making the game, the fact that each minigame in 666 Malevolence Lane needs some sort of unique implementation complicated things, but a solid foundation of reusable tasks and helper components to give the AI more information and make them smarter players goes a long way in making the game more enjoyable to play when you don't have enough people to fill out all the slots.
 
-![Image](/images/mallanebt.png)
+{{<image width=100% src="/images/mallanebt.png">}}
 
-### - Minigames
+### Minigames
 
 While working on the game, I contributed 2 out of the 10 playable minigames available in 666 Malevolence Lane. The first one was part of our initial playtesting prototype, known in-game as 'Musical Scares', which is a chance based minigame where players pick from hiding spots that are slowly made inaccessible as the enemy eliminates more players. Since we wanted a unified Interact button that served multiple purposes across different minigames, this seemed like a good minigame to start our prototype with and to flesh out that system.
 
-![Image](/images/mallanems.gif)
+{{<image width=100% src="/images/mallanems.gif">}}
 
 I also developed a minigame focused on an infinite procedural hallway that plays on older horror tropes, called 'Hall'O'Way Chase'. The procedural generation for the hallway uses a number of tileable models made by our artists before adding additional details such as lights, windows, pillars, etc. Finally obstacles and clutter are placed through the hallway in a periodic and fair manner.
 
-![Image](/images/mallanehowc.gif)
+{{<image width=100% src="/images/mallanehowc.gif">}}

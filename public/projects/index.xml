@@ -14,5 +14,19 @@
       <guid>http://localhost:1313/projects/666-malevolence-lane/</guid>
       <description>An action-packed minigame focused local multiplayer experience for you and your friends! Click &amp;lsquo;Read more&amp;rsquo; to learn about my involvement!</description>
     </item>
+    <item>
+      <title>Bone Rolla</title>
+      <link>http://localhost:1313/projects/bone-rolla/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/bone-rolla/</guid>
+      <description>Roguelike dice game with deckbuilding and RPG elements. Click &amp;lsquo;Read more&amp;rsquo; to learn about the development of the game!</description>
+    </item>
+    <item>
+      <title>Pizza Wizard: 144X</title>
+      <link>http://localhost:1313/projects/pizza-wizard-144x/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/pizza-wizard-144x/</guid>
+      <description>Arcade style pizza delivery game, utilize spells and upgrades to try and achieve a highscore. Click &amp;lsquo;Read more&amp;rsquo; to learn about my involvement!</description>
+    </item>
   </channel>
 </rss>

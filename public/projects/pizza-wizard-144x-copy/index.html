@@ -28,18 +28,18 @@
 
 
 
-<meta property="og:url" content="http://localhost:1313/projects/666-malevolence-lane/">
+<meta property="og:url" content="http://localhost:1313/projects/pizza-wizard-144x-copy/">
   <meta property="og:site_name" content="Camilla Leslie - Software Engineer">
-  <meta property="og:title" content="666 Malevolence Lane">
-  <meta property="og:description" content="An action-packed minigame focused local multiplayer experience for you and your friends! Click ‘Read more’ to learn about my involvement!">
+  <meta property="og:title" content="Pizza Wizard: 144X">
+  <meta property="og:description" content="Arcade style pizza delivery game, utilize spells and upgrades to try and achieve a highscore. Click ‘Read more’ to learn about my involvement!">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="projects">
 
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="666 Malevolence Lane">
-  <meta name="twitter:description" content="An action-packed minigame focused local multiplayer experience for you and your friends! Click ‘Read more’ to learn about my involvement!">
+  <meta name="twitter:title" content="Pizza Wizard: 144X">
+  <meta name="twitter:description" content="Arcade style pizza delivery game, utilize spells and upgrades to try and achieve a highscore. Click ‘Read more’ to learn about my involvement!">
 
 
 
@@ -120,7 +120,7 @@
   
 
   <title>
-666 Malevolence Lane | Camilla Leslie - Software Engineer
+Pizza Wizard: 144X | Camilla Leslie - Software Engineer
 
   </title>
 </head>
@@ -309,6 +309,7 @@
       <div class="col-sm-12 col-md-12 col-lg-9">
         <div class="pr-lg-4">
           <div class="title mb-5">
+            <h1 class="text-center mb-4">Pizza Wizard: 144X</h1>
             <div class="text-center">
               
 
@@ -319,51 +320,53 @@
           </div>
           
           <article class="page-content  p-2">
-          <img src="/images/mallanebanner.png" width="100%" style="max-width:100%px;border-radius:16px;" />
-<br><br>
+          <p><img src="/images/pizzawizardbanner.png" alt="Image"></p>
 <h2 id="my-involvement">My Involvement</h2>
-<p>As Technical Director on the project, I was involved in most engineering aspects of the game, such as architecture of the core systems, heading development on the Player AI systems, and handling build automation. I also contributed two of the playable minigames in 666 Malevolence Lane, which are outlined in more detail below. Beyond the systems I made, I worked in most of the codebase doing polish and general bugfixing for the last few months of development.</p>
-<h3 id="build-automation">Build Automation</h3>
-<p>One of my prouder contributions to the project was a system for automatically updating a machines&rsquo; code and art assets through P4 and building the project nightly. I hooked this system up to a Discord bot and used a combination of the bot and webhooks to display information regarding build automated test statuses, which helped us identify quickly what changelists last broke the ability to package our project.</p>
-<p>Here&rsquo;s a small example of how I was fetching these files and building the game using Python and APScheduler:</p>
-<pre tabindex="0"><code>#Build function that runs once every 24 hours via APScheduler
-def BuildGame(self):
-        #Changes directory to UE5 build tools
-        os.chdir(f&#34;{self.epic_games_folder_path}/Engine/Build/BatchFiles/&#34;)
+<p>This game was produced by four students for a Real Time Programming course, I personally contributed both programming implementations and a large part of the art assets used throughout the project. I modeled and textured all 3D elements used in the game through Blender 4.2, employing a handpainted texturing style using Blender&rsquo;s texture paint feature. All the UI elements used in the game were designed and made by me in Inkscape. Beyond all the art that I contributed, I also implemented all of the UI elements and menus into the game, as well as the feature for taking and delivering orders.</p>
+<h3 id="ui-design">UI Design</h3>
+<p>I attempted to pull off a simple cartoon rendering style for the UI elements used in gameplay, ie. the minimap icons and the money and timer icons. I wanted a solid consistent outline and clean readable icons, part of achieving this was using a diverse blend of vibrant colors in the icon designs.</p>
+<p><img src="/images/pizzawizardui1.png" alt="Image"></p>
+<h3 id="ui-programming">UI Programming</h3>
+<h4 id="main-menu">Main Menu</h4>
+<p>Perhaps my biggest responsibility for the project behind supplying the 3D assets was the implementations for any and everything UI in the game. I was responsible for setting up the main menu and it&rsquo;s various features, such as it&rsquo;s cinematic sweeping camera views and transition animations between the menu and the main game level.</p>
+<video width="100%" playsinline loop autoplay muted>
+    <source src="/images/pizzawizardmainmenu.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+<h4 id="minimap">Minimap</h4>
+<p>I also handled the implementation of the minimap and it&rsquo;s features, which include things such as edge snapping when the marker is outside the radius of the minimap, and accurate world to map translation. Here&rsquo;s a code sample of how I handled snapping icons to the edge of the minimap when their distance passed a threshold, this example specifically handling the pizzeria icon&rsquo;s location on the minimap as demonstrated in the video clip below.</p>
+<pre tabindex="0"><code># Called every frame
+func _process(_delta: float) -&gt; void:
+    #Maps UI positions in general to match game world positions
+    var player_map_x = player.position.x * map_to_world_ratio
+    var player_map_y = player.position.z * map_to_world_ratio
+    
+    #Maps minimap position to match game world positions
+    minimap_pos.set_position(Vector2(minimap_offset.x + map_x, minimap_offset.y + map_y))
+    
+    #Maps pizzeria icon to match game world position
+    var pizzeria_map_x = (player.position.x - pizzeria_location.x) * map_to_world_ratio
+    var pizzeria_map_y = (player.position.z - pizzeria_location.z) * map_to_world_ratio
 
-        #Builds the project&#39;s code into a target file
-        exit_code = subprocess.call(f&#34;Build.bat {self.project_name} Win64 Development \&#34;{self.game_uproject_path}\&#34;&#34;)
-
-        if not exit_code == 0:
-            self.webhook.send(f&#34;# Build Information\n\nFailed to build target file from source code! {alert_role_id}&#34;, thread=self.thread_id)
-            return False
-
-        #Starts build and package of project at game_uproject_path
-        exit_code = subprocess.call(f&#34;RunUAT BuildCookRun -project=\&#34;{self.game_uproject_path}\&#34; -platform=Win64 -clientconfig=Development -serverconfig=Development &#34; +
-                                    f&#34;-skipcook -maps=AllMaps -compile -stage -pak -archivedirectory={self.build_folder_path} -archive&#34;, shell=True)
-        
-        #If exit_code is anything other than 0 then build has failed, pings Camilla in discord
-        if not exit_code == 0:
-            self.webhook.send(f&#39;# Build Information\n\nBuild failed! {alert_role_id}&#39;, thread=self.thread_id)
-            return False
-        else:
-            data = BuildUtils.GetBuildJSONData()
-            data[&#34;version&#34;] += 1
-            BuildUtils.StoreBuildJSONData(data)
-            rel, mile, ver = data[&#34;release&#34;], data[&#34;milestone&#34;], data[&#34;version&#34;]
-            self.webhook.send(f&#39;# Build Information\n\nBuild successful! Current version: v{rel}.{mile}.{ver} {alert_role_id}&#39;, thread=self.thread_id)
-            return True
-</code></pre><h3 id="player-ai">Player AI</h3>
-<p>This was a feature that posed a few technical challenges for making the game, the fact that each minigame in 666 Malevolence Lane needs some sort of unique implementation complicated things, but a solid foundation of reusable tasks and helper components to give the AI more information and make them smarter players goes a long way in making the game more enjoyable to play when you don&rsquo;t have enough people to fill out all the slots.</p>
-<img src="/images/mallanebt.png" width="100%" style="max-width:600px;border-radius:16px;" />
-<br><br>
-<h3 id="minigames">Minigames</h3>
-<p>While working on the game, I contributed 2 out of the 10 playable minigames available in 666 Malevolence Lane. The first one was part of our initial playtesting prototype, known in-game as &lsquo;Musical Scares&rsquo;, which is a chance based minigame where players pick from hiding spots that are slowly made inaccessible as the enemy eliminates more players. Since we wanted a unified Interact button that served multiple purposes across different minigames, this seemed like a good minigame to start our prototype with and to flesh out that system.</p>
-<img src="/images/mallanems.gif" width="100%" style="max-width:600px;border-radius:16px;" />
-<br><br>
-<p>I also developed a minigame focused on an infinite procedural hallway that plays on older horror tropes, called &lsquo;Hall&rsquo;O&rsquo;Way Chase&rsquo;. The procedural generation for the hallway uses a number of tileable models made by our artists before adding additional details such as lights, windows, pillars, etc. Finally obstacles and clutter are placed through the hallway in a periodic and fair manner.</p>
-<img src="/images/mallanehowc.gif" width="100%" style="max-width:600px;border-radius:16px;" />
-<br><br>
+    #Check if icon distance is outside of minimap borders, if so fix position to edge of minimap
+    if (Vector2(pizzeria_map_x, pizzeria_map_y).length() &gt; minimap_max_dist):
+        var dir = Vector2(player.position.x - pizzeria_location.x, player.position.z - pizzeria_location.z)
+        var angle = atan2(dir.y, dir.x)
+        var new_x = cos(angle) * minimap_radius
+        var new_y = sin(angle) * minimap_radius
+        pizzeria_icon.set_position(Vector2(pizzeria_icon_osffset.x + new_x, pizzeria_icon_osffset.y + new_y))
+    else: #Otherwise just use previous distance calculation to set position
+        pizzeria_icon.set_position(Vector2(pizzeria_offset.x + player_map_x, pizzeria_offset.y + player_map_y))
+</code></pre><video width="50%" playsinline loop autoplay muted>
+    <source src="/images/pizzawizardui.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+<h3 id="3d-modeling--texturing">3D Modeling &amp; Texturing</h3>
+<p>I produced all models and textures used within the game during the first half of this 3-month long project, including a car model, 11 different buildings, 5 different road pieces, and several pieces of misc. scenery. I accomplished this using Blender 4.2 entirely, using it as both the modeling and texturing program of choice. I utilized the texture painting mode and custom brush assets to hand paint the models directly, imprinting texture and perspective on the strokes to give a unique style to all the models.</p>
+<p><img src="/images/pizzawizardmodel1.png" alt="Image"></p>
+<p><img src="/images/pizzawizardmodel2.png" alt="Image"></p>
+<p><img src="/images/pizzawizardmodel3.png" alt="Image"></p>
+<p><img src="/images/pizzawizardmodel4.png" alt="Image"></p>
 
           </article>
         </div>
@@ -380,9 +383,9 @@ def BuildGame(self):
   <ul>
     <li><a href="#my-involvement">My Involvement</a>
       <ul>
-        <li><a href="#build-automation">Build Automation</a></li>
-        <li><a href="#player-ai">Player AI</a></li>
-        <li><a href="#minigames">Minigames</a></li>
+        <li><a href="#ui-design">UI Design</a></li>
+        <li><a href="#ui-programming">UI Programming</a></li>
+        <li><a href="#3d-modeling--texturing">3D Modeling &amp; Texturing</a></li>
       </ul>
     </li>
   </ul>
