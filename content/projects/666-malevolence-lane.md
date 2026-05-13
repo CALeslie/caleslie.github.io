@@ -64,14 +64,14 @@ def BuildGame(self):
 
 This was a feature that posed a few technical challenges for making the game, the fact that each minigame in 666 Malevolence Lane needs some sort of unique implementation complicated things, but a solid foundation of reusable tasks and helper components to give the AI more information and make them smarter players goes a long way in making the game more enjoyable to play when you don't have enough people to fill out all the slots.
 
-{{<image width=100% src="/images/mallanebt.png">}}
+{{<image width=100% maxwidth=100% src="/images/mallanebt.png">}}
 
 ### Minigames
 
 While working on the game, I contributed 2 out of the 10 playable minigames available in 666 Malevolence Lane. The first one was part of our initial playtesting prototype, known in-game as 'Musical Scares', which is a chance based minigame where players pick from hiding spots that are slowly made inaccessible as the enemy eliminates more players. Since we wanted a unified Interact button that served multiple purposes across different minigames, this seemed like a good minigame to start our prototype with and to flesh out that system.
 
-{{<image width=100% src="/images/mallanems.gif">}}
+{{<image width=100% maxwidth=100% src="/images/mallanems.gif">}}
 
 I also developed a minigame focused on an infinite procedural hallway that plays on older horror tropes, called 'Hall'O'Way Chase'. The procedural generation for the hallway uses a number of tileable models made by our artists before adding additional details such as lights, windows, pillars, etc. Finally obstacles and clutter are placed through the hallway in a periodic and fair manner.
 
-{{<image width=100% src="/images/mallanehowc.gif">}}
+{{<image width=100% maxwidth=100% src="/images/mallanehowc.gif">}}

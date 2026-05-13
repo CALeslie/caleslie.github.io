@@ -4,6 +4,10 @@
     font-size: 17px;
 }
 
+#single .container {
+    max-width: 1000px;
+}
+
 #single .py-0 .py-sm-5 {
 }
 

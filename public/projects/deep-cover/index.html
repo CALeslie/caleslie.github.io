@@ -28,18 +28,18 @@
 
 
 
-<meta property="og:url" content="http://localhost:1313/projects/pizza-wizard-144x-copy/">
+<meta property="og:url" content="http://localhost:1313/projects/deep-cover/">
   <meta property="og:site_name" content="Camilla Leslie - Software Engineer">
-  <meta property="og:title" content="Pizza Wizard: 144X">
-  <meta property="og:description" content="Arcade style pizza delivery game, utilize spells and upgrades to try and achieve a highscore. Click ‘Read more’ to learn about my involvement!">
+  <meta property="og:title" content="Deep Cover">
+  <meta property="og:description" content="Stealth based game with camo raster editing system, match your camo to your surroundings to avoid being caught! Click ‘Read more’ to learn about my involvement!">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="projects">
 
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Pizza Wizard: 144X">
-  <meta name="twitter:description" content="Arcade style pizza delivery game, utilize spells and upgrades to try and achieve a highscore. Click ‘Read more’ to learn about my involvement!">
+  <meta name="twitter:title" content="Deep Cover">
+  <meta name="twitter:description" content="Stealth based game with camo raster editing system, match your camo to your surroundings to avoid being caught! Click ‘Read more’ to learn about my involvement!">
 
 
 
@@ -120,7 +120,7 @@
   
 
   <title>
-Pizza Wizard: 144X | Camilla Leslie - Software Engineer
+Deep Cover | Camilla Leslie - Software Engineer
 
   </title>
 </head>
@@ -319,58 +319,39 @@ Pizza Wizard: 144X | Camilla Leslie - Software Engineer
           </div>
           
           <article class="page-content  p-2">
-          <img src="/images/pizzawizardbanner.png" width="100%" style="max-width:100%px;border-radius:16px;" />
+          <img src="/images/deepcoverbanner.png" width="100%" style="max-width:100%px;border-radius:16px;" />
 <br><br>
 <h2 id="my-involvement">My Involvement</h2>
-<p>This game was produced by four students for a Real Time Programming course, I personally contributed both programming implementations and a large part of the art assets used throughout the project. I modeled and textured all 3D elements used in the game through Blender 4.2, employing a handpainted texturing style using Blender&rsquo;s texture paint feature. All the UI elements used in the game were designed and made by me in Inkscape. Beyond all the art that I contributed, I also implemented all of the UI elements and menus into the game, as well as the feature for taking and delivering orders.</p>
-<h3 id="ui-design">UI Design</h3>
-<p>I attempted to pull off a simple cartoon rendering style for the UI elements used in gameplay, ie. the minimap icons and the money and timer icons. I wanted a solid consistent outline and clean readable icons, part of achieving this was using a diverse blend of vibrant colors in the icon designs.</p>
-<img src="/images/pizzawizardui1.png" width="100%" style="max-width:600px;border-radius:16px;" />
+<p>This game was made during my freshman year at college as my first gamejam submission to my universities&rsquo; semesterly gamejam events. I handled all of the programming and implementations within Unity, while my partner helped with the art and design of the game.</p>
+<h2 id="camo-system">Camo System</h2>
+<p>This system works together with a few central parts, namely the raster editor for painting a canvas that is then applied to the player sprite using a custom masking system. This is then checked for color accuracy to the background behind the player before informing the enemy detection system how big or small their detection radius should be.</p>
+<h3 id="raster-editor">Raster Editor</h3>
+<p>At that time we were studying how to make raster editors in Python using the Pygame library so I wanted to extend that implementation into my gamejam project, with my partner coming up with the idea to tie it into stealth mechanics by letting player&rsquo;s paint their own camo, and testing to see how much it matches the background behind them.</p>
+<img src="/images/deepcover1.png" width="100%" style="max-width:600px;border-radius:16px;" />
 <br><br>
-<h3 id="ui-programming">UI Programming</h3>
-<h4 id="main-menu">Main Menu</h4>
-<p>Perhaps my biggest responsibility for the project behind supplying the 3D assets was the implementations for any and everything UI in the game. I was responsible for setting up the main menu and it&rsquo;s various features, such as it&rsquo;s cinematic sweeping camera views and transition animations between the menu and the main game level.</p>
-<video width="100%" style="border-radius: 16px;" playsinline loop autoplay muted>
-    <source src="/images/pizzawizardmainmenu.mp4" type="video/mp4">
+<h3 id="masking-player-camo">Masking Player Camo</h3>
+<p>In order to better convey the act of camouflaging up, I wanted to do more than just apply the sprite behind the player&rsquo;s silhouette mask. I wanted the player-made camouflage to stay stationary while the player freely moved around, evoking a style similar to some cartoons from the late 90&rsquo;s and early 00&rsquo;s.</p>
+<video width="60%" style="border-radius: 16px;justify-content: center;align-items: center;display: flex;" playsinline loop autoplay muted>
+    <source src="/images/deepcover2.mp4" type="video/mp4">
     Your browser does not support the video tag.
 </video>
-<h4 id="minimap">Minimap</h4>
-<p>I also handled the implementation of the minimap and it&rsquo;s features, which include things such as edge snapping when the marker is outside the radius of the minimap, and accurate world to map translation. Here&rsquo;s a code sample of how I handled snapping icons to the edge of the minimap when their distance passed a threshold, this example specifically handling the pizzeria icon&rsquo;s location on the minimap as demonstrated in the video clip below.</p>
-<pre tabindex="0"><code># Called every frame
-func _process(_delta: float) -&gt; void:
-    #Maps UI positions in general to match game world positions
-    var player_map_x = player.position.x * map_to_world_ratio
-    var player_map_y = player.position.z * map_to_world_ratio
-    
-    #Maps minimap position to match game world positions
-    minimap_pos.set_position(Vector2(minimap_offset.x + map_x, minimap_offset.y + map_y))
-    
-    #Maps pizzeria icon to match game world position
-    var pizzeria_map_x = (player.position.x - pizzeria_location.x) * map_to_world_ratio
-    var pizzeria_map_y = (player.position.z - pizzeria_location.z) * map_to_world_ratio
-
-    #Check if icon distance is outside of minimap borders, if so fix position to edge of minimap
-    if (Vector2(pizzeria_map_x, pizzeria_map_y).length() &gt; minimap_max_dist):
-        var dir = Vector2(player.position.x - pizzeria_location.x, player.position.z - pizzeria_location.z)
-        var angle = atan2(dir.y, dir.x)
-        var new_x = cos(angle) * minimap_radius
-        var new_y = sin(angle) * minimap_radius
-        pizzeria_icon.set_position(Vector2(pizzeria_icon_osffset.x + new_x, pizzeria_icon_osffset.y + new_y))
-    else: #Otherwise just use previous distance calculation to set position
-        pizzeria_icon.set_position(Vector2(pizzeria_offset.x + player_map_x, pizzeria_offset.y + player_map_y))
-</code></pre><video width="50%" style="border-radius: 16px;" playsinline loop autoplay muted>
-    <source src="/images/pizzawizardui.mp4" type="video/mp4">
+<br><br>
+<h3 id="enemy-detection">Enemy Detection</h3>
+<p>As previously mentioned, the accuracy of the player&rsquo;s handpainted camouflage to the background behind the player modifies the detection radius for the Enemy AI in the game. In this GIF you can see the demonstration by seeing the difference in detection range from the enemy between the good and bad camouflage choices.</p>
+<img src="/images/deepcoverdetection.gif" width="100%" style="max-width:600px;border-radius:16px;" />
+<br><br>
+<h2 id="enemy-ai">Enemy AI</h2>
+<p>Since this was a gamejam project the Enemy AI is fairly simple, there are only two types of AI to encounter in this game. The first is the stationary guard, these enemies will stand still in a single area and rotate between set points after given intervals.</p>
+<video width="100%" style="border-radius: 16px;justify-content: center;align-items: center;display: flex;" playsinline loop autoplay muted>
+    <source src="/images/deepcover3.mp4" type="video/mp4">
     Your browser does not support the video tag.
 </video>
-<h3 id="3d-modeling--texturing">3D Modeling &amp; Texturing</h3>
-<p>I produced all models and textures used within the game during the first half of this 3-month long project, including a car model, 11 different buildings, 5 different road pieces, and several pieces of misc. scenery. I accomplished this using Blender 4.2 entirely, using it as both the modeling and texturing program of choice. I utilized the texture painting mode and custom brush assets to hand paint the models directly, imprinting texture and perspective on the strokes to give a unique style to all the models.</p>
-<img src="/images/pizzawizardmodel1.png" width="100%" style="max-width:600px;border-radius:16px;" />
 <br><br>
-<img src="/images/pizzawizardmodel2.png" width="100%" style="max-width:600px;border-radius:16px;" />
-<br><br>
-<img src="/images/pizzawizardmodel3.png" width="100%" style="max-width:600px;border-radius:16px;" />
-<br><br>
-<img src="/images/pizzawizardmodel4.png" width="100%" style="max-width:600px;border-radius:16px;" />
+<p>The other type of AI is the patroling guard, this type of enemy will move between given positions in an array of vectors, and they always look in the direction they are moving.</p>
+<video width="100%" style="border-radius: 16px;justify-content: center;align-items: center;display: flex;" playsinline loop autoplay muted>
+    <source src="/images/deepcover4.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
 <br><br>
 
           </article>
@@ -386,13 +367,15 @@ func _process(_delta: float) -&gt; void:
               <div class="toc-content">
                 <nav id="TableOfContents">
   <ul>
-    <li><a href="#my-involvement">My Involvement</a>
+    <li><a href="#my-involvement">My Involvement</a></li>
+    <li><a href="#camo-system">Camo System</a>
       <ul>
-        <li><a href="#ui-design">UI Design</a></li>
-        <li><a href="#ui-programming">UI Programming</a></li>
-        <li><a href="#3d-modeling--texturing">3D Modeling &amp; Texturing</a></li>
+        <li><a href="#raster-editor">Raster Editor</a></li>
+        <li><a href="#masking-player-camo">Masking Player Camo</a></li>
+        <li><a href="#enemy-detection">Enemy Detection</a></li>
       </ul>
     </li>
+    <li><a href="#enemy-ai">Enemy AI</a></li>
   </ul>
 </nav>
               </div>
