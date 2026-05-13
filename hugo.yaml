@@ -116,8 +116,8 @@ params:
           - icon: fab fa-itch-io
             url: https://cube-number-zero.itch.io/pizza-wizard-144x
         featured:
-          name: Check it out on Itch!
-          link: https://cube-number-zero.itch.io/pizza-wizard-144x
+          name: Read more on my involvement!
+          link: /projects/pizza-wizard-144x/
 
       - title: "Bone Rolla - 2022"
         content: Roguelike dice game, curate and refine your dice collection as you delve as deep into the dungeon as you can!
@@ -139,8 +139,8 @@ params:
           - icon: fab fa-itch-io
             url: https://thecammy.itch.io/bonerolla
         featured:
-          name: Check it out on Itch!
-          link: https://thecammy.itch.io/bonerolla
+          name: Read more on the development!
+          link: /projects/bone-rolla/
 
       - title: "Deep Cover - 2022"
         content: Shawnee University Fall Game Jam entry about making your own camouflage to increase your odds of going undetected. Two person team, won most interesting mechanic and 2nd overall in game jam!
@@ -162,8 +162,8 @@ params:
           - icon: fab fa-itch-io
             url: https://thecammy.itch.io/deep-cover
         featured:
-          name: Check it out on Itch!
-          link: https://thecammy.itch.io/deep-cover
+          name: Read more on the development!
+          link: /projects/deep-cover/
 
       - title: "RandomItemGen - 2021"
         content: Small personal prototype that recreates the item structure from ARPG's such as Path of Exile, along with other RPG elements like talent trees and applying item attributes to player stats.
@@ -185,8 +185,8 @@ params:
           - icon: fab fa-itch-io
             url: https://thecammy.itch.io/randomitemgen
         featured:
-          name: Play it on Itch!
-          link: https://thecammy.itch.io/randomitemgen
+          name: Read more on the development!
+          link: /projects/random-item-gen/
 
       - title: "Duality - 2018"
         content: "Entry into the Itch.io Weekly Game Jam #76. Puzzle game about solving which things you need to sort out before you die, then utilize your ghost to do what your body couldn't do!"

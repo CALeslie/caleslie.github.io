@@ -23,10 +23,6 @@
                 <small>|</small>
               {{ end }}
 
-              {{ if .Params.date }}
-                {{ .Date | time.Format (":date_medium" | default "Jan 2, 2006") }}
-              {{ end }}
-
               {{ if or (.Site.Params.singlePages.readTime.enable | default false) (.Params.enableReadingTime) }}
               <span id="readingTime">
                 {{ .Site.Params.singlePages.readTime.content | default (i18n "min_read") }}
