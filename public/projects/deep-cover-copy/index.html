@@ -28,18 +28,18 @@
 
 
 
-<meta property="og:url" content="http://localhost:1313/projects/666-malevolence-lane/">
+<meta property="og:url" content="http://localhost:1313/projects/deep-cover-copy/">
   <meta property="og:site_name" content="Camilla Leslie - Software Engineer">
-  <meta property="og:title" content="666 Malevolence Lane">
-  <meta property="og:description" content="An action-packed minigame focused local multiplayer experience for you and your friends! Click ‘Read more’ to learn about my involvement!">
+  <meta property="og:title" content="Deep Cover">
+  <meta property="og:description" content="Stealth based game with camo raster editing system, match your camo to your surroundings to avoid being caught! Click ‘Read more’ to learn about my involvement!">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="projects">
 
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="666 Malevolence Lane">
-  <meta name="twitter:description" content="An action-packed minigame focused local multiplayer experience for you and your friends! Click ‘Read more’ to learn about my involvement!">
+  <meta name="twitter:title" content="Deep Cover">
+  <meta name="twitter:description" content="Stealth based game with camo raster editing system, match your camo to your surroundings to avoid being caught! Click ‘Read more’ to learn about my involvement!">
 
 
 
@@ -120,7 +120,7 @@
   
 
   <title>
-666 Malevolence Lane | Camilla Leslie - Software Engineer
+Deep Cover | Camilla Leslie - Software Engineer
 
   </title>
 </head>
@@ -319,54 +319,40 @@
           </div>
           
           <article class="page-content  p-2">
-          <img src="/images/mallanebanner.png" width="100%" style="max-width:100%px;border-radius:16px;" />
+          <img src="/images/deepcoverbanner.png" width="100%" style="max-width:100%px;border-radius:16px;" />
 <br><br>
 <h2 id="my-involvement">My Involvement</h2>
-<p>I made this game as a collaborative effort during senior year of my degree as my capstone project. As Technical Director on the project, I was involved in most engineering aspects of the game, such as architecture of the core systems, heading development on the Player AI systems, and handling build automation. I also contributed two of the playable minigames in 666 Malevolence Lane, which are outlined in more detail below. Beyond the systems I made, I worked in most of the codebase doing polish and general bugfixing for the last few months of development.</p>
-<h3 id="build-automation">Build Automation</h3>
-<p>One of my prouder contributions to the project was a system for automatically updating a machines&rsquo; code and art assets through P4 and building the project nightly. I hooked this system up to a Discord bot and used a combination of the bot and webhooks to display information regarding build automated test statuses, which helped us identify quickly what changelists last broke the ability to package our project.</p>
-<p>Here&rsquo;s a small example of how I was fetching these files and building the game using Python and APScheduler:</p>
-<pre tabindex="0"><code>#Build function that runs once every 24 hours via APScheduler
-def BuildGame(self):
-        #Changes directory to UE5 build tools
-        os.chdir(f&#34;{self.epic_games_folder_path}/Engine/Build/BatchFiles/&#34;)
-
-        #Builds the project&#39;s code into a target file
-        exit_code = subprocess.call(f&#34;Build.bat {self.project_name} Win64 Development \&#34;{self.game_uproject_path}\&#34;&#34;)
-
-        if not exit_code == 0:
-            self.webhook.send(f&#34;# Build Information\n\nFailed to build target file from source code! {alert_role_id}&#34;, thread=self.thread_id)
-            return False
-
-        #Starts build and package of project at game_uproject_path
-        exit_code = subprocess.call(f&#34;RunUAT BuildCookRun -project=\&#34;{self.game_uproject_path}\&#34; -platform=Win64 -clientconfig=Development -serverconfig=Development &#34; +
-                                    f&#34;-skipcook -maps=AllMaps -compile -stage -pak -archivedirectory={self.build_folder_path} -archive&#34;, shell=True)
-        
-        #If exit_code is anything other than 0 then build has failed, pings Camilla in discord
-        if not exit_code == 0:
-            self.webhook.send(f&#39;# Build Information\n\nBuild failed! {alert_role_id}&#39;, thread=self.thread_id)
-            return False
-        else:
-            data = BuildUtils.GetBuildJSONData()
-            data[&#34;version&#34;] += 1
-            BuildUtils.StoreBuildJSONData(data)
-            rel, mile, ver = data[&#34;release&#34;], data[&#34;milestone&#34;], data[&#34;version&#34;]
-            self.webhook.send(f&#39;# Build Information\n\nBuild successful! Current version: v{rel}.{mile}.{ver} {alert_role_id}&#39;, thread=self.thread_id)
-            return True
-</code></pre><h3 id="player-ai">Player AI</h3>
-<p>This was a feature that posed a few technical challenges for making the game, the fact that each minigame in 666 Malevolence Lane needs some sort of unique implementation complicated things, but a solid foundation of reusable tasks and helper components to give the AI more information and make them smarter players goes a long way in making the game more enjoyable to play when you don&rsquo;t have enough people to fill out all the slots.</p>
-<img src="/images/mallanebt.png" width="100%" style="max-width:100%px;border-radius:16px;" />
+<p>This game was made during my freshman year at college as my first gamejam submission to my universities&rsquo; semesterly gamejam events. I handled all of the programming and implementations within Unity, while my partner helped with the art and design of the game.</p>
+<h2 id="camo-system">Camo System</h2>
+<p>This system works together with a few central parts, namely the raster editor for painting a canvas that is then applied to the player sprite using a custom masking system. This is then checked for color accuracy to the background behind the player before informing the enemy detection system how big or small their detection radius should be.</p>
+<h3 id="raster-editor">Raster Editor</h3>
+<p>At that time we were studying how to make raster editors in Python using the Pygame library so I wanted to extend that implementation into my gamejam project, with my partner coming up with the idea to tie it into stealth mechanics by letting player&rsquo;s paint their own camo, and testing to see how much it matches the background behind them.</p>
+<img src="/images/deepcover1.png" width="100%" style="max-width:600px;border-radius:16px;" />
 <br><br>
-<h3 id="minigames">Minigames</h3>
-<p>While working on the game, I contributed 2 out of the 10 playable minigames available in 666 Malevolence Lane. The first one was part of our initial playtesting prototype, known in-game as &lsquo;Musical Scares&rsquo;, which is a chance based minigame where players pick from hiding spots that are slowly made inaccessible as the enemy eliminates more players. Since we wanted a unified Interact button that served multiple purposes across different minigames, this seemed like a good minigame to start our prototype with and to flesh out that system.</p>
-<img src="/images/mallanems.gif" width="100%" style="max-width:100%px;border-radius:16px;" />
+<h3 id="masking-player-camo">Masking Player Camo</h3>
+<p>In order to better convey the act of camouflaging up, I wanted to do more than just apply the sprite behind the player&rsquo;s silhouette mask. I wanted the player-made camouflage to stay stationary while the player freely moved around, evoking a style similar to some cartoons from the late 90&rsquo;s and early 00&rsquo;s.</p>
+<video width="60%" style="border-radius: 16px;justify-content: center;align-items: center;display: flex;" playsinline loop autoplay muted>
+    <source src="/images/deepcover2.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
 <br><br>
-<p>I also developed a minigame focused on an infinite procedural hallway that plays on older horror tropes, called &lsquo;Hall&rsquo;O&rsquo;Way Chase&rsquo;. The procedural generation for the hallway uses a number of tileable models made by our artists before adding additional details such as lights, windows, pillars, etc. Finally obstacles and clutter are placed through the hallway in a periodic and fair manner.</p>
-<img src="/images/mallanehowc.gif" width="100%" style="max-width:100%px;border-radius:16px;" />
+<h3 id="enemy-detection">Enemy Detection</h3>
+<p>As previously mentioned, the accuracy of the player&rsquo;s handpainted camouflage to the background behind the player modifies the detection radius for the Enemy AI in the game. In this GIF you can see the demonstration by seeing the difference in detection range from the enemy between the good and bad camouflage choices.</p>
+<img src="/images/deepcoverdetection.gif" width="100%" style="max-width:600px;border-radius:16px;" />
 <br><br>
-<h2 id="steam-release">Steam Release</h2>
-<p>Our team leads decided early that one of our end goals for the project was publication on Steam, as we deemed it to be a big learning experience that we couldn&rsquo;t pass up on. We felt that achieving a full game launch before the end of the year would mean that managed to appropriately scope the features and content of the game to fit within our allotted project timeframe. With some last minute crunch, we were glad to accomplish this as of April 22nd, 2026! If you would like to support our project or check out our trailer, <a href="https://store.steampowered.com/app/4450260/666_Malevolence_Lane/">you can find us over on Steam</a>!</p>
-<p><a href="https://store.steampowered.com/app/4450260/666_Malevolence_Lane/"><img src="/images/mallanebanner2.png" alt="Image"></a></p>
+<h2 id="enemy-ai">Enemy AI</h2>
+<p>Since this was a gamejam project the Enemy AI is fairly simple, there are only two types of AI to encounter in this game. The first is the stationary guard, these enemies will stand still in a single area and rotate between set points after given intervals.</p>
+<video width="100%" style="border-radius: 16px;justify-content: center;align-items: center;display: flex;" playsinline loop autoplay muted>
+    <source src="/images/deepcover3.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+<br><br>
+<p>The other type of AI is the patroling guard, this type of enemy will move between given positions in an array of vectors, and they always look in the direction they are moving.</p>
+<video width="100%" style="border-radius: 16px;justify-content: center;align-items: center;display: flex;" playsinline loop autoplay muted>
+    <source src="/images/deepcover4.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+<br><br>
 
           </article>
         </div>
@@ -381,14 +367,15 @@ def BuildGame(self):
               <div class="toc-content">
                 <nav id="TableOfContents">
   <ul>
-    <li><a href="#my-involvement">My Involvement</a>
+    <li><a href="#my-involvement">My Involvement</a></li>
+    <li><a href="#camo-system">Camo System</a>
       <ul>
-        <li><a href="#build-automation">Build Automation</a></li>
-        <li><a href="#player-ai">Player AI</a></li>
-        <li><a href="#minigames">Minigames</a></li>
+        <li><a href="#raster-editor">Raster Editor</a></li>
+        <li><a href="#masking-player-camo">Masking Player Camo</a></li>
+        <li><a href="#enemy-detection">Enemy Detection</a></li>
       </ul>
     </li>
-    <li><a href="#steam-release">Steam Release</a></li>
+    <li><a href="#enemy-ai">Enemy AI</a></li>
   </ul>
 </nav>
               </div>

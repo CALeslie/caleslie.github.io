@@ -86,8 +86,8 @@ params:
           - icon: fab fa-discord
             url: https://discord.gg/4UdRc5Supg
         featured:
-          name: Check it out on Steam!
-          link: https://store.steampowered.com/app/4450260/666_Malevolence_Lane/
+          name: Read more on my involvement!
+          link: /projects/666-malevolence-lane
 
       - title: "Pizza Wizard: 144X - 2025"
         content: Arcade style pizza delivery game, utilize spells and upgrades to try and achieve a highscore. Made all models and art assets except title logo by hand.
@@ -145,6 +145,9 @@ params:
       - title: "Deep Cover - 2022"
         content: Shawnee University Fall Game Jam entry about making your own camouflage to increase your odds of going undetected. Two person team, won most interesting mechanic and 2nd overall in game jam!
         image: images/deepcover.png
+        imagelink: 
+          enable: true
+          link: /projects/deep-cover/
         badges:
           - "Unity"
           - "C#"
@@ -165,6 +168,9 @@ params:
       - title: "RandomItemGen - 2021"
         content: Small personal prototype that recreates the item structure from ARPG's such as Path of Exile, along with other RPG elements like talent trees and applying item attributes to player stats.
         image: images/randomitemgen.png
+        imagelink: 
+          enable: true
+          link: /projects/random-item-gen/
         badges:
           - "Unity"
           - "C#"
@@ -216,7 +222,7 @@ params:
         - Unreal Engine 5
         - Unity
         - Godot
-        - C++
+        - C & C++
         - C#
         - GDScript
         - Python
@@ -244,7 +250,7 @@ params:
           url: "https://shawnee.edu"
         date: "2022 - 2026"
         GPA: "3.62 out of 4.0"
-        content: "Well rounded mix of theory and application of multiple areas of Computer Science including data structures, operating systems, 3D graphics programming, algorithms, and more. Developed several game projects while studying, and spent my senior year as Technical Director for the collaborative capstone project '666 Malevolence Lane'."
+        content: "Well rounded mix of theory and application in multiple areas of Computer Science including data structures, operating systems, 3D graphics programming, algorithms, and more. Developed several game projects while studying, and spent my senior year as Technical Director for the collaborative capstone project '666 Malevolence Lane'."
 
   contact:
     enable: true

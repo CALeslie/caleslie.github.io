@@ -43,5 +43,12 @@
       <guid>http://localhost:1313/projects/pizza-wizard-144x/</guid>
       <description>Arcade style pizza delivery game, utilize spells and upgrades to try and achieve a highscore. Click &amp;lsquo;Read more&amp;rsquo; to learn about my involvement!</description>
     </item>
+    <item>
+      <title>RandomItemGen</title>
+      <link>http://localhost:1313/projects/random-item-gen/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/random-item-gen/</guid>
+      <description>Item generator prototype with various RPG mechanic implementations. Click &amp;lsquo;Read more&amp;rsquo; to learn about the features I developed for it!</description>
+    </item>
   </channel>
 </rss>

@@ -56,11 +56,11 @@
     transform: translateY(-10px);
     opacity: 0;
   }
-  50% {
+  25% {
     transform: translateY(-10px);
     opacity: 0;
   }
-  80% {
+  60% {
     transform: translateY(5px)
   }
   100% {
@@ -262,6 +262,7 @@ header .navbar.animate {
     font-weight: 500;
     opacity: 0.9 !important;
     line-height: 1.7rem !important;
+    scroll-margin-top: 80px;
 }
 
 #about a {
@@ -294,6 +295,10 @@ header .navbar.animate {
 
 #experience * {
     background-color: transparent !important;
+}
+
+#experience .content {
+    scroll-margin-top: 80px;
 }
 
 #experience .exp-border {

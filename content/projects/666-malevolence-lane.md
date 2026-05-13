@@ -22,7 +22,7 @@ toc:
 
 ## My Involvement
 
-As Technical Director on the project, I was involved in most engineering aspects of the game, such as architecture of the core systems, heading development on the Player AI systems, and handling build automation. I also contributed two of the playable minigames in 666 Malevolence Lane, which are outlined in more detail below. Beyond the systems I made, I worked in most of the codebase doing polish and general bugfixing for the last few months of development.
+I made this game as a collaborative effort during senior year of my degree as my capstone project. As Technical Director on the project, I was involved in most engineering aspects of the game, such as architecture of the core systems, heading development on the Player AI systems, and handling build automation. I also contributed two of the playable minigames in 666 Malevolence Lane, which are outlined in more detail below. Beyond the systems I made, I worked in most of the codebase doing polish and general bugfixing for the last few months of development.
 
 ### Build Automation
 
@@ -75,3 +75,9 @@ While working on the game, I contributed 2 out of the 10 playable minigames avai
 I also developed a minigame focused on an infinite procedural hallway that plays on older horror tropes, called 'Hall'O'Way Chase'. The procedural generation for the hallway uses a number of tileable models made by our artists before adding additional details such as lights, windows, pillars, etc. Finally obstacles and clutter are placed through the hallway in a periodic and fair manner.
 
 {{<image width=100% maxwidth=100% src="/images/mallanehowc.gif">}}
+
+## Steam Release
+
+Our team leads decided early that one of our end goals for the project was publication on Steam, as we deemed it to be a big learning experience that we couldn't pass up on. We felt that achieving a full game launch before the end of the year would mean that managed to appropriately scope the features and content of the game to fit within our allotted project timeframe. With some last minute crunch, we were glad to accomplish this as of April 22nd, 2026! If you would like to support our project or check out our trailer, [you can find us over on Steam](https://store.steampowered.com/app/4450260/666_Malevolence_Lane/)!
+
+[![Image](/images/mallanebanner2.png)](https://store.steampowered.com/app/4450260/666_Malevolence_Lane/)

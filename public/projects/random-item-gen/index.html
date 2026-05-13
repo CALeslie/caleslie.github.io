@@ -28,18 +28,18 @@
 
 
 
-<meta property="og:url" content="http://localhost:1313/projects/666-malevolence-lane/">
+<meta property="og:url" content="http://localhost:1313/projects/random-item-gen/">
   <meta property="og:site_name" content="Camilla Leslie - Software Engineer">
-  <meta property="og:title" content="666 Malevolence Lane">
-  <meta property="og:description" content="An action-packed minigame focused local multiplayer experience for you and your friends! Click ‘Read more’ to learn about my involvement!">
+  <meta property="og:title" content="RandomItemGen">
+  <meta property="og:description" content="Item generator prototype with various RPG mechanic implementations. Click ‘Read more’ to learn about the features I developed for it!">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="projects">
 
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="666 Malevolence Lane">
-  <meta name="twitter:description" content="An action-packed minigame focused local multiplayer experience for you and your friends! Click ‘Read more’ to learn about my involvement!">
+  <meta name="twitter:title" content="RandomItemGen">
+  <meta name="twitter:description" content="Item generator prototype with various RPG mechanic implementations. Click ‘Read more’ to learn about the features I developed for it!">
 
 
 
@@ -120,7 +120,7 @@
   
 
   <title>
-666 Malevolence Lane | Camilla Leslie - Software Engineer
+RandomItemGen | Camilla Leslie - Software Engineer
 
   </title>
 </head>
@@ -319,54 +319,56 @@
           </div>
           
           <article class="page-content  p-2">
-          <img src="/images/mallanebanner.png" width="100%" style="max-width:100%px;border-radius:16px;" />
+          <img src="/images/randomitemgenbanner.png" width="100%" style="max-width:100%px;border-radius:16px;" />
 <br><br>
-<h2 id="my-involvement">My Involvement</h2>
-<p>I made this game as a collaborative effort during senior year of my degree as my capstone project. As Technical Director on the project, I was involved in most engineering aspects of the game, such as architecture of the core systems, heading development on the Player AI systems, and handling build automation. I also contributed two of the playable minigames in 666 Malevolence Lane, which are outlined in more detail below. Beyond the systems I made, I worked in most of the codebase doing polish and general bugfixing for the last few months of development.</p>
-<h3 id="build-automation">Build Automation</h3>
-<p>One of my prouder contributions to the project was a system for automatically updating a machines&rsquo; code and art assets through P4 and building the project nightly. I hooked this system up to a Discord bot and used a combination of the bot and webhooks to display information regarding build automated test statuses, which helped us identify quickly what changelists last broke the ability to package our project.</p>
-<p>Here&rsquo;s a small example of how I was fetching these files and building the game using Python and APScheduler:</p>
-<pre tabindex="0"><code>#Build function that runs once every 24 hours via APScheduler
-def BuildGame(self):
-        #Changes directory to UE5 build tools
-        os.chdir(f&#34;{self.epic_games_folder_path}/Engine/Build/BatchFiles/&#34;)
-
-        #Builds the project&#39;s code into a target file
-        exit_code = subprocess.call(f&#34;Build.bat {self.project_name} Win64 Development \&#34;{self.game_uproject_path}\&#34;&#34;)
-
-        if not exit_code == 0:
-            self.webhook.send(f&#34;# Build Information\n\nFailed to build target file from source code! {alert_role_id}&#34;, thread=self.thread_id)
-            return False
-
-        #Starts build and package of project at game_uproject_path
-        exit_code = subprocess.call(f&#34;RunUAT BuildCookRun -project=\&#34;{self.game_uproject_path}\&#34; -platform=Win64 -clientconfig=Development -serverconfig=Development &#34; +
-                                    f&#34;-skipcook -maps=AllMaps -compile -stage -pak -archivedirectory={self.build_folder_path} -archive&#34;, shell=True)
-        
-        #If exit_code is anything other than 0 then build has failed, pings Camilla in discord
-        if not exit_code == 0:
-            self.webhook.send(f&#39;# Build Information\n\nBuild failed! {alert_role_id}&#39;, thread=self.thread_id)
-            return False
-        else:
-            data = BuildUtils.GetBuildJSONData()
-            data[&#34;version&#34;] += 1
-            BuildUtils.StoreBuildJSONData(data)
-            rel, mile, ver = data[&#34;release&#34;], data[&#34;milestone&#34;], data[&#34;version&#34;]
-            self.webhook.send(f&#39;# Build Information\n\nBuild successful! Current version: v{rel}.{mile}.{ver} {alert_role_id}&#39;, thread=self.thread_id)
-            return True
-</code></pre><h3 id="player-ai">Player AI</h3>
-<p>This was a feature that posed a few technical challenges for making the game, the fact that each minigame in 666 Malevolence Lane needs some sort of unique implementation complicated things, but a solid foundation of reusable tasks and helper components to give the AI more information and make them smarter players goes a long way in making the game more enjoyable to play when you don&rsquo;t have enough people to fill out all the slots.</p>
-<img src="/images/mallanebt.png" width="100%" style="max-width:100%px;border-radius:16px;" />
+<h2 id="overview">Overview</h2>
+<p>I made this project to more familiarize myself with common RPG mechanics such as inventories and equipment panels, handling various UI interactions such as dragging items between inventory and equipment slots, UI interactions for talent trees that have pre-requisites, stat displays, and more.</p>
+<h2 id="item-system">Item System</h2>
+<p>The project started out with wanting to generate items similar to those found in ARPG games such as Path of Exile, where there are constraints on the item such as an item level that influences how high of tier of modifiers a given item can have, or a rarity quality that dictates how many attributes can be on that item at one time.</p>
+<h3 id="implicit--explicit-properties">Implicit &amp; Explicit Properties</h3>
+<p>Similar to itemization in Path of Exile, I wanted to emulate the idea that certain types of items come with implicit properties that they will always have, such as a jewelry subtype that always provides some amount of mana regeneration, or shield items always having some percentage chance to block attacks. Beyond their implicit properties, items can also have explicitly granted properties as well from a large pool of attributes that are shared amongst all item types. Each of these properties come with potential prefixes and suffixes that can be chosen to be added to the item&rsquo;s name.</p>
+<p><img src="/images/itemgen1.png" width="100%" style="max-width:600px;border-radius:16px;" />
 <br><br>
-<h3 id="minigames">Minigames</h3>
-<p>While working on the game, I contributed 2 out of the 10 playable minigames available in 666 Malevolence Lane. The first one was part of our initial playtesting prototype, known in-game as &lsquo;Musical Scares&rsquo;, which is a chance based minigame where players pick from hiding spots that are slowly made inaccessible as the enemy eliminates more players. Since we wanted a unified Interact button that served multiple purposes across different minigames, this seemed like a good minigame to start our prototype with and to flesh out that system.</p>
-<img src="/images/mallanems.gif" width="100%" style="max-width:100%px;border-radius:16px;" />
-<br><br>
-<p>I also developed a minigame focused on an infinite procedural hallway that plays on older horror tropes, called &lsquo;Hall&rsquo;O&rsquo;Way Chase&rsquo;. The procedural generation for the hallway uses a number of tileable models made by our artists before adding additional details such as lights, windows, pillars, etc. Finally obstacles and clutter are placed through the hallway in a periodic and fair manner.</p>
-<img src="/images/mallanehowc.gif" width="100%" style="max-width:100%px;border-radius:16px;" />
-<br><br>
-<h2 id="steam-release">Steam Release</h2>
-<p>Our team leads decided early that one of our end goals for the project was publication on Steam, as we deemed it to be a big learning experience that we couldn&rsquo;t pass up on. We felt that achieving a full game launch before the end of the year would mean that managed to appropriately scope the features and content of the game to fit within our allotted project timeframe. With some last minute crunch, we were glad to accomplish this as of April 22nd, 2026! If you would like to support our project or check out our trailer, <a href="https://store.steampowered.com/app/4450260/666_Malevolence_Lane/">you can find us over on Steam</a>!</p>
-<p><a href="https://store.steampowered.com/app/4450260/666_Malevolence_Lane/"><img src="/images/mallanebanner2.png" alt="Image"></a></p>
+In this example the &lsquo;Calibrated&rsquo; prefix comes from the increased chance to hit modifier, and the &lsquo;of Brawn&rsquo; suffix comes from the total strength increase modifier. The item also has an implicit modifier granting spell damage because of the item type &lsquo;Tome&rsquo; that it has.</p>
+<h3 id="inventory--equipment">Inventory &amp; Equipment</h3>
+<p>After making the implementation for items, I wanted a way for players to be able to keep and equip their items, so I made an implementation for an inventory and equipment system that you might see in MMORPGs. I wanted to make this feature as intuitive to use as possible so it supports both drag and drop and right click to equip operations.</p>
+<video width="100%" style="border-radius: 16px;justify-content: center;align-items: center;display: flex;max-width: 600px;" playsinline loop autoplay muted>
+    <source src="/images/itemgenui1.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+<br>
+<h3 id="applying-item-stats">Applying Item Stats</h3>
+<p>Then I wanted to actually make the attributes on an item change stat values for the player, so I stubbed those out into a list of player stats and then loop over the equipped items and apply effects based on the current index attribute for said item.</p>
+<video width="100%" style="border-radius: 16px;justify-content: center;align-items: center;display: flex;max-width: 600px;" playsinline loop autoplay muted>
+    <source src="/images/itemgenui2.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+<br>
+<p>In this example these pair of gloves give the player +36 Maximum Mana, which when equipped you can observe the Mana stat going from its unbuffed value of 100, to it buffed value of 136. Similarly this is applied for each other attribute on the gloves and is reflected on the status panel to the right.</p>
+<h2 id="talent-tree">Talent Tree</h2>
+<p>Another commonly encountered feature in MMORPGs are Talent Trees, which are generally started from a single point and allows players to make branching decisions to further enhance the elements that they in particular find fun.</p>
+<p><video width="100%" style="border-radius: 16px;justify-content: center;align-items: center;display: flex;max-width: 600px;" playsinline loop autoplay muted>
+    <source src="/images/itemgen2.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+<br>
+A core design element for most of these are constraints on which path the player can take at a given time, such as a node requiring one or more prerequisite talents to be unlocked, or to have a certain threshold of points in the tree in total.</p>
+<h2 id="ui-implementations">UI Implementations</h2>
+<p>I was particularly proud of the UI implementations I worked on throughout this project, namely the custom tooltips and the dynamic UI panels.</p>
+<h3 id="custom-tooltips">Custom Tooltips</h3>
+<p>It feels like tooltips in games like these are mandatory so I wanted a robust system that handled displaying all the relevant info for something the player might hover over to gain more information on. I also wanted it to be concise and sleek in design, so I followed with the grey minimalist design patterns that the rest of the project had up to this point.</p>
+<video width="100%" style="border-radius: 16px;justify-content: center;align-items: center;display: flex;max-width: 600px;" playsinline loop autoplay muted>
+    <source src="/images/itemgen3.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+<br>
+<h3 id="dynamic-ui-panels">Dynamic UI Panels</h3>
+<p>Again as previously stated, this is another commonly found feature in MMORPGs and RPGs in general, as there can be a multitude of information panels being presented to players, and it&rsquo;s useful to be able to move them around, reorder them, and to close and re-open at your leisure. I implemented these similar to how you expect a window to move on a desktop computer, with the top title bar being a drag zone.</p>
+<video width="100%" style="border-radius: 16px;justify-content: center;align-items: center;display: flex;max-width: 600px;" playsinline loop autoplay muted>
+    <source src="/images/itemgen4.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+<br>
 
           </article>
         </div>
@@ -381,14 +383,21 @@ def BuildGame(self):
               <div class="toc-content">
                 <nav id="TableOfContents">
   <ul>
-    <li><a href="#my-involvement">My Involvement</a>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#item-system">Item System</a>
       <ul>
-        <li><a href="#build-automation">Build Automation</a></li>
-        <li><a href="#player-ai">Player AI</a></li>
-        <li><a href="#minigames">Minigames</a></li>
+        <li><a href="#implicit--explicit-properties">Implicit &amp; Explicit Properties</a></li>
+        <li><a href="#inventory--equipment">Inventory &amp; Equipment</a></li>
+        <li><a href="#applying-item-stats">Applying Item Stats</a></li>
       </ul>
     </li>
-    <li><a href="#steam-release">Steam Release</a></li>
+    <li><a href="#talent-tree">Talent Tree</a></li>
+    <li><a href="#ui-implementations">UI Implementations</a>
+      <ul>
+        <li><a href="#custom-tooltips">Custom Tooltips</a></li>
+        <li><a href="#dynamic-ui-panels">Dynamic UI Panels</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
               </div>

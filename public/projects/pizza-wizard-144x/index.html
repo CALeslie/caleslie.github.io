@@ -330,11 +330,11 @@ Pizza Wizard: 144X | Camilla Leslie - Software Engineer
 <h3 id="ui-programming">UI Programming</h3>
 <h4 id="main-menu">Main Menu</h4>
 <p>Perhaps my biggest responsibility for the project behind supplying the 3D assets was the implementations for any and everything UI in the game. I was responsible for setting up the main menu and it&rsquo;s various features, such as it&rsquo;s cinematic sweeping camera views and transition animations between the menu and the main game level.</p>
-<video width="100%" style="border-radius: 16px;justify-content: center;align-items: center;display: flex;" playsinline loop autoplay muted>
+<video width="100%" style="border-radius: 16px;justify-content: center;align-items: center;display: flex;max-width: 600px;" playsinline loop autoplay muted>
     <source src="/images/pizzawizardmainmenu.mp4" type="video/mp4">
     Your browser does not support the video tag.
 </video>
-<br><br>
+<br>
 <h4 id="minimap">Minimap</h4>
 <p>I also handled the implementation of the minimap and it&rsquo;s features, which include things such as edge snapping when the marker is outside the radius of the minimap, and accurate world to map translation. Here&rsquo;s a code sample of how I handled snapping icons to the edge of the minimap when their distance passed a threshold, this example specifically handling the pizzeria icon&rsquo;s location on the minimap as demonstrated in the video clip below.</p>
 <pre tabindex="0"><code># Called every frame
@@ -359,11 +359,11 @@ func _process(_delta: float) -&gt; void:
         pizzeria_icon.set_position(Vector2(pizzeria_icon_osffset.x + new_x, pizzeria_icon_osffset.y + new_y))
     else: #Otherwise just use previous distance calculation to set position
         pizzeria_icon.set_position(Vector2(pizzeria_offset.x + player_map_x, pizzeria_offset.y + player_map_y))
-</code></pre><video width="50%" style="border-radius: 16px;justify-content: center;align-items: center;display: flex;" playsinline loop autoplay muted>
+</code></pre><video width="50%" style="border-radius: 16px;justify-content: center;align-items: center;display: flex;max-width: 600px;" playsinline loop autoplay muted>
     <source src="/images/pizzawizardui.mp4" type="video/mp4">
     Your browser does not support the video tag.
 </video>
-<br><br>
+<br>
 <h3 id="3d-modeling--texturing">3D Modeling &amp; Texturing</h3>
 <p>I produced all models and textures used within the game during the first half of this 3-month long project, including a car model, 11 different buildings, 5 different road pieces, and several pieces of misc. scenery. I accomplished this using Blender 4.2 entirely, using it as both the modeling and texturing program of choice. I utilized the texture painting mode and custom brush assets to hand paint the models directly, imprinting texture and perspective on the strokes to give a unique style to all the models.</p>
 <img src="/images/pizzawizardmodel1.png" width="100%" style="max-width:600px;border-radius:16px;" />
