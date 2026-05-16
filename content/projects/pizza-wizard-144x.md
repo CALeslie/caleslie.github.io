@@ -59,7 +59,7 @@ func _process(_delta: float) -> void:
         var angle = atan2(dir.y, dir.x)
         var new_x = cos(angle) * minimap_radius
         var new_y = sin(angle) * minimap_radius
-        pizzeria_icon.set_position(Vector2(pizzeria_icon_osffset.x + new_x, pizzeria_icon_osffset.y + new_y))
+        pizzeria_icon.set_position(Vector2(pizzeria_icon_offset.x + new_x, pizzeria_icon_offset.y + new_y))
     else: #Otherwise just use previous distance calculation to set position
         pizzeria_icon.set_position(Vector2(pizzeria_offset.x + player_map_x, pizzeria_offset.y + player_map_y))
 ```

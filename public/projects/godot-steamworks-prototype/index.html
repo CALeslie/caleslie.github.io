@@ -28,20 +28,18 @@
 
 
 
-<meta property="og:url" content="http://localhost:1313/projects/pizza-wizard-144x/">
+<meta property="og:url" content="http://localhost:1313/projects/godot-steamworks-prototype/">
   <meta property="og:site_name" content="Camilla Leslie - Software Engineer">
-  <meta property="og:title" content="Pizza Wizard: 144X">
-  <meta property="og:description" content="Arcade style pizza delivery game, utilize spells and upgrades to try and achieve a highscore. Click ‘Read more’ to learn about my involvement!">
+  <meta property="og:title" content="Godot Steamworks Prototype">
+  <meta property="og:description" content="Item generator prototype with various RPG mechanic implementations. Click ‘Read more’ to learn about the features I developed for it!">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="projects">
-    <meta property="article:published_time" content="2025-04-25T00:00:00+08:00">
-    <meta property="article:modified_time" content="2025-04-25T00:00:00+08:00">
 
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Pizza Wizard: 144X">
-  <meta name="twitter:description" content="Arcade style pizza delivery game, utilize spells and upgrades to try and achieve a highscore. Click ‘Read more’ to learn about my involvement!">
+  <meta name="twitter:title" content="Godot Steamworks Prototype">
+  <meta name="twitter:description" content="Item generator prototype with various RPG mechanic implementations. Click ‘Read more’ to learn about the features I developed for it!">
 
 
 
@@ -122,7 +120,7 @@
   
 
   <title>
-Pizza Wizard: 144X | Camilla Leslie - Software Engineer
+Godot Steamworks Prototype | Camilla Leslie - Software Engineer
 
   </title>
 </head>
@@ -319,61 +317,56 @@ Pizza Wizard: 144X | Camilla Leslie - Software Engineer
           </div>
           
           <article class="page-content  p-2">
-          <img src="/images/pizzawizardbanner.png" width="100%" style="max-width:100%px;border-radius:16px;" />
+          <img src="/images/godotsteambanner.png" width="100%" style="max-width:100%px;border-radius:16px;" />
 <br><br>
-<h2 id="my-involvement">My Involvement</h2>
-<p>This game was produced by four students for a Real Time Programming course, I personally contributed both programming implementations and a large part of the art assets used throughout the project. I modeled and textured all 3D elements used in the game through Blender 4.2, employing a handpainted texturing style using Blender&rsquo;s texture paint feature. All the UI elements used in the game were designed and made by me in Inkscape. Beyond all the art that I contributed, I also implemented all of the UI elements and menus into the game, as well as the feature for taking and delivering orders.</p>
-<h3 id="ui-design">UI Design</h3>
-<p>I attempted to pull off a simple cartoon rendering style for the UI elements used in gameplay, ie. the minimap icons and the money and timer icons. I wanted a solid consistent outline and clean readable icons, part of achieving this was using a diverse blend of vibrant colors in the icon designs.</p>
-<img src="/images/pizzawizardui1.png" width="100%" style="max-width:600px;border-radius:16px;" />
+<h2 id="overview">Overview</h2>
+<p>I made this project to more familiarize myself with common RPG mechanics such as inventories and equipment panels, handling various UI interactions such as dragging items between inventory and equipment slots, UI interactions for talent trees that have pre-requisites, stat displays, and more.</p>
+<h2 id="item-system">Item System</h2>
+<p>The project started out with wanting to generate items similar to those found in ARPG games such as Path of Exile, where there are constraints on the item such as an item level that influences how high of tier of modifiers a given item can have, or a rarity quality that dictates how many attributes can be on that item at one time.</p>
+<h3 id="implicit--explicit-properties">Implicit &amp; Explicit Properties</h3>
+<p>Similar to itemization in Path of Exile, I wanted to emulate the idea that certain types of items come with implicit properties that they will always have, such as a jewelry subtype that always provides some amount of mana regeneration, or shield items always having some percentage chance to block attacks. Beyond their implicit properties, items can also have explicitly granted properties as well from a large pool of attributes that are shared amongst all item types. Each of these properties come with potential prefixes and suffixes that can be chosen to be added to the item&rsquo;s name.</p>
+<p><img src="/images/itemgen1.png" width="100%" style="max-width:600px;border-radius:16px;" />
 <br><br>
-<h3 id="ui-programming">UI Programming</h3>
-<h4 id="main-menu">Main Menu</h4>
-<p>Perhaps my biggest responsibility for the project behind supplying the 3D assets was the implementations for any and everything UI in the game. I was responsible for setting up the main menu and it&rsquo;s various features, such as it&rsquo;s cinematic sweeping camera views and transition animations between the menu and the main game level.</p>
+In this example the &lsquo;Calibrated&rsquo; prefix comes from the increased chance to hit modifier, and the &lsquo;of Brawn&rsquo; suffix comes from the total strength increase modifier. The item also has an implicit modifier granting spell damage because of the item type &lsquo;Tome&rsquo; that it has.</p>
+<h3 id="inventory--equipment">Inventory &amp; Equipment</h3>
+<p>After making the implementation for items, I wanted a way for players to be able to keep and equip their items, so I made an implementation for an inventory and equipment system that you might see in MMORPGs. I wanted to make this feature as intuitive to use as possible so it supports both drag and drop and right click to equip operations.</p>
 <video width="100%" style="border-radius: 16px;justify-content: center;align-items: center;display: flex;max-width: 600px;" playsinline loop autoplay muted>
-    <source src="/images/pizzawizardmainmenu.mp4" type="video/mp4">
+    <source src="/images/itemgenui1.mp4" type="video/mp4">
     Your browser does not support the video tag.
 </video>
 <br>
-<h4 id="minimap">Minimap</h4>
-<p>I also handled the implementation of the minimap and it&rsquo;s features, which include things such as edge snapping when the marker is outside the radius of the minimap, and accurate world to map translation. Here&rsquo;s a code sample of how I handled snapping icons to the edge of the minimap when their distance passed a threshold, this example specifically handling the pizzeria icon&rsquo;s location on the minimap as demonstrated in the video clip below.</p>
-<pre tabindex="0"><code># Called every frame
-func _process(_delta: float) -&gt; void:
-    #Maps UI positions in general to match game world positions
-    var player_map_x = player.position.x * map_to_world_ratio
-    var player_map_y = player.position.z * map_to_world_ratio
-    
-    #Maps minimap position to match game world positions
-    minimap_pos.set_position(Vector2(minimap_offset.x + map_x, minimap_offset.y + map_y))
-    
-    #Maps pizzeria icon to match game world position
-    var pizzeria_map_x = (player.position.x - pizzeria_location.x) * map_to_world_ratio
-    var pizzeria_map_y = (player.position.z - pizzeria_location.z) * map_to_world_ratio
-
-    #Check if icon distance is outside of minimap borders, if so fix position to edge of minimap
-    if (Vector2(pizzeria_map_x, pizzeria_map_y).length() &gt; minimap_max_dist):
-        var dir = Vector2(player.position.x - pizzeria_location.x, player.position.z - pizzeria_location.z)
-        var angle = atan2(dir.y, dir.x)
-        var new_x = cos(angle) * minimap_radius
-        var new_y = sin(angle) * minimap_radius
-        pizzeria_icon.set_position(Vector2(pizzeria_icon_offset.x + new_x, pizzeria_icon_offset.y + new_y))
-    else: #Otherwise just use previous distance calculation to set position
-        pizzeria_icon.set_position(Vector2(pizzeria_offset.x + player_map_x, pizzeria_offset.y + player_map_y))
-</code></pre><video width="50%" style="border-radius: 16px;justify-content: center;align-items: center;display: flex;max-width: 600px;" playsinline loop autoplay muted>
-    <source src="/images/pizzawizardui.mp4" type="video/mp4">
+<h3 id="applying-item-stats">Applying Item Stats</h3>
+<p>Then I wanted to actually make the attributes on an item change stat values for the player, so I stubbed those out into a list of player stats and then loop over the equipped items and apply effects based on the current index attribute for said item.</p>
+<video width="100%" style="border-radius: 16px;justify-content: center;align-items: center;display: flex;max-width: 600px;" playsinline loop autoplay muted>
+    <source src="/images/itemgenui2.mp4" type="video/mp4">
     Your browser does not support the video tag.
 </video>
 <br>
-<h3 id="3d-modeling--texturing">3D Modeling &amp; Texturing</h3>
-<p>I produced all models and textures used within the game during the first half of this 3-month long project, including a car model, 11 different buildings, 5 different road pieces, and several pieces of misc. scenery. I accomplished this using Blender 4.2 entirely, using it as both the modeling and texturing program of choice. I utilized the texture painting mode and custom brush assets to hand paint the models directly, imprinting texture and perspective on the strokes to give a unique style to all the models.</p>
-<img src="/images/pizzawizardmodel1.png" width="100%" style="max-width:600px;border-radius:16px;" />
-<br><br>
-<img src="/images/pizzawizardmodel2.png" width="100%" style="max-width:600px;border-radius:16px;" />
-<br><br>
-<img src="/images/pizzawizardmodel3.png" width="100%" style="max-width:600px;border-radius:16px;" />
-<br><br>
-<img src="/images/pizzawizardmodel4.png" width="100%" style="max-width:600px;border-radius:16px;" />
-<br><br>
+<p>In this example these pair of gloves give the player +36 Maximum Mana, which when equipped you can observe the Mana stat going from its unbuffed value of 100, to it buffed value of 136. Similarly this is applied for each other attribute on the gloves and is reflected on the status panel to the right.</p>
+<h2 id="talent-tree">Talent Tree</h2>
+<p>Another commonly encountered feature in MMORPGs are Talent Trees, which are generally started from a single point and allows players to make branching decisions to further enhance the elements that they in particular find fun.</p>
+<p><video width="100%" style="border-radius: 16px;justify-content: center;align-items: center;display: flex;max-width: 600px;" playsinline loop autoplay muted>
+    <source src="/images/itemgen2.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+<br>
+A core design element for most of these are constraints on which path the player can take at a given time, such as a node requiring one or more prerequisite talents to be unlocked, or to have a certain threshold of points in the tree in total.</p>
+<h2 id="ui-implementations">UI Implementations</h2>
+<p>I was particularly proud of the UI implementations I worked on throughout this project, namely the custom tooltips and the dynamic UI panels.</p>
+<h3 id="custom-tooltips">Custom Tooltips</h3>
+<p>It feels like tooltips in games like these are mandatory so I wanted a robust system that handled displaying all the relevant info for something the player might hover over to gain more information on. I also wanted it to be concise and sleek in design, so I followed with the grey minimalist design patterns that the rest of the project had up to this point.</p>
+<video width="100%" style="border-radius: 16px;justify-content: center;align-items: center;display: flex;max-width: 600px;" playsinline loop autoplay muted>
+    <source src="/images/itemgen3.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+<br>
+<h3 id="dynamic-ui-panels">Dynamic UI Panels</h3>
+<p>Again as previously stated, this is another commonly found feature in MMORPGs and RPGs in general, as there can be a multitude of information panels being presented to players, and it&rsquo;s useful to be able to move them around, reorder them, and to close and re-open at your leisure. I implemented these similar to how you expect a window to move on a desktop computer, with the top title bar being a drag zone.</p>
+<video width="100%" style="border-radius: 16px;justify-content: center;align-items: center;display: flex;max-width: 600px;" playsinline loop autoplay muted>
+    <source src="/images/itemgen4.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+<br>
 
           </article>
         </div>
@@ -388,11 +381,19 @@ func _process(_delta: float) -&gt; void:
               <div class="toc-content">
                 <nav id="TableOfContents">
   <ul>
-    <li><a href="#my-involvement">My Involvement</a>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#item-system">Item System</a>
       <ul>
-        <li><a href="#ui-design">UI Design</a></li>
-        <li><a href="#ui-programming">UI Programming</a></li>
-        <li><a href="#3d-modeling--texturing">3D Modeling &amp; Texturing</a></li>
+        <li><a href="#implicit--explicit-properties">Implicit &amp; Explicit Properties</a></li>
+        <li><a href="#inventory--equipment">Inventory &amp; Equipment</a></li>
+        <li><a href="#applying-item-stats">Applying Item Stats</a></li>
+      </ul>
+    </li>
+    <li><a href="#talent-tree">Talent Tree</a></li>
+    <li><a href="#ui-implementations">UI Implementations</a>
+      <ul>
+        <li><a href="#custom-tooltips">Custom Tooltips</a></li>
+        <li><a href="#dynamic-ui-panels">Dynamic UI Panels</a></li>
       </ul>
     </li>
   </ul>
