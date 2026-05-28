@@ -47,7 +47,7 @@ params:
     button:
       enable: true
       name: Resume
-      url: cLeslie_Resume.pdf
+      url: cLeslie_GD_Resume.pdf
       download: false
       newPage: true
     socialLinks:
